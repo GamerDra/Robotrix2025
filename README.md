@@ -1,138 +1,65 @@
-Here's a professional and comprehensive README template tailored for competition-winning projects. It emphasizes clarity, structure, and impact.  
+# Basket the Ball!!!
+
+
+## Calculation of 3d using 2 images /Stereo Vision 
+
+### Formula for Depth Calculation
+---
+The depth \( Z \) of an object in stereo vision is calculated as:
+
+\[
+Z = \frac{f \cdot B}{d}
+\]
+
+Where:
+- \( Z \): Depth (distance of the object from the cameras)
+- \( f \): Focal length of the camera lens
+- \( B \): Baseline (distance between the two cameras)
+- \( d \): Disparity (difference in the position of corresponding points in the left and right images)
+The **focal length** of a camera lens can be calculated from the **field of view (FoV)** 
+
+### Formula:
+
+\[
+f = \frac{W}{2 \cdot \tan\left(\frac{\text{FoV}}{2}\right)}
+\]
+
+Where:
+- \( f \): Focal length (in millimeters)
+- \( W \): Width of the camera sensor (in millimeters)
+- \( \text{FoV} \): Field of view (in radians)
 
 ---
 
-# **Project Title**  
-*A concise and engaging tagline that summarizes your project.*
+## Approches
 
-## **Table of Contents**
-1. [Overview](#overview)  
-2. [Problem Statement](#problem-statement)  
-3. [Proposed Solution](#proposed-solution)  
-4. [Features](#features)  
-5. [Architecture](#architecture)  
-6. [Technologies Used](#technologies-used)  
-7. [Results](#results)  
-8. [Setup and Installation](#setup-and-installation)  
-9. [Usage](#usage)  
-10. [Future Improvements](#future-improvements)  
-11. [Acknowledgments](#acknowledgments)  
+### Using projection
+Sample the ball's trajectory at any 2 points and then calculate the location where the ball would fall, and then move the net to that spot. <br/>
+We had two options to perform the calculation:
+one using quadratic and other using Kalman Filter.
+We incorporated both the techniques, but the ball position calculation had errors which caused issues with net positioning. <br/>
+We also had problems with accurately determining when to take the samples. <br/>
+We ultimately decided to drop this idea
 
----
+### Using ball centering
+This is a very simple approach, we just always try to keep the ball in the center of the image (not exactly the center because the net is offset from the camera). <br/>
+This is what we ended up using in the end. It's pretty accurate at getting to the ball but we consistently encounter an issue where the ball hits the blackboard and flies away due to the force. <br/>
+Another issue is that if the camera loses track of the ball (if it goes higher than the camera's max vertical range for example), we have no way to position the net other than hoping it'll come back close to the net. This can be fixed with a few solutions (Take the direction of movement of the ball before it goes out of the frame and continue moving in that direction till it comes back in to frame, kinda like projection), but we didn't have time enough to implement that.
 
-## **Overview**  
-### Brief Introduction  
-- Summarize the purpose and vision of your project.  
-- Highlight its significance and the value it brings to the target audience.  
 
-### Key Achievements  
-- Won **[Competition Name]**: Placed [position] out of [total teams].  
-- Achieved [specific accomplishments, e.g., highest accuracy, fastest processing time].  
+### Attempt at RL
+we tried of using NEAT(NeuroEvolution of Augmenting Topologies) to allow perfect capturing of ball, irrespective of luck, unfortunately we lacked time to correctly implement this though we tried on a sample 
 
----
+    
+## Results
+During our testing, we found that the ball kept hitting the board and bouncing off, due to miscalc in the ball position or lack of understanding of the projection.
 
-## **Problem Statement**  
-- Describe the problem you aimed to solve.  
-- Provide relevant statistics or context to justify the need for your solution.  
+We were consistently able to hit the basket though not hoop it more than once.
+With more parameter refining certainly we can certainly increase its acccuracy.
 
----
+### Videos
+the drive folder containing [video](https://drive.google.com/drive/folders/1Os0rfMXUQQF5Q4ycMKVQgPddxUpDIJjj)
 
-## **Proposed Solution**  
-- Explain your solution in detail.  
-- Describe how it addresses the problem effectively and innovatively.  
-- Include diagrams or images if applicable.
-
----
-
-## **Features**  
-- List the core functionalities of your project.  
-- Example:  
-  - 📈 **Data Visualization**: Interactive plots for insights.  
-  - 🧠 **AI/ML Models**: Predictive analytics using state-of-the-art algorithms.  
-  - 🌐 **User Interface**: Intuitive and user-friendly design.
-
----
-
-## **Architecture**  
-### High-Level Diagram  
-- Insert an architecture diagram or workflow representation here.  
-
-### Description  
-- Explain each component and how they interact within the system.  
-
----
-
-## **Technologies Used**  
-- Programming Languages: [e.g., Python, JavaScript]  
-- Frameworks/Libraries: [e.g., TensorFlow, Streamlit]  
-- Tools: [e.g., Docker, AWS, Git]  
-
----
-
-## **Results**  
-- Showcase your performance metrics, benchmarks, or outcomes.  
-- Example:  
-  - Model accuracy: **95.4%**  
-  - Anomaly detection precision: **98.2%**  
-- Include charts, graphs, or screenshots to visualize results.  
-
----
-
-## **Setup and Installation**  
-### Prerequisites  
-- List the tools or packages needed (e.g., Python 3.8+, Node.js).  
-
-### Steps  
-1. Clone this repository:  
-   ```bash  
-   git clone https://github.com/username/repository-name.git  
-   ```  
-2. Navigate to the project directory:  
-   ```bash  
-   cd repository-name  
-   ```  
-3. Install dependencies:  
-   ```bash  
-   pip install -r requirements.txt  
-   ```  
-4. Run the project:  
-   ```bash  
-   streamlit run app.py  
-   ```  
-
----
-
-## **Usage**  
-### Example Scenarios  
-- Explain how users can interact with your project.  
-- Include code snippets or screenshots for clarity.  
-
----
-
-## **Future Improvements**  
-- Outline potential enhancements or features to be added.  
-- Example:  
-  - Extend the dataset for better model generalization.  
-  - Add real-time data integration.  
-  - Enhance UI for accessibility.
-
----
-
-## **Acknowledgments**  
-- Mention team members, mentors, or resources that helped you.  
-- Example:  
-  - [Team Name] for collaboration and dedication.  
-  - [Competition Organizers] for providing this opportunity.  
-  - [Open-source projects/libraries] used in the project.  
-
----
-
-### **Contact**  
-- **Name:** [Your Full Name]  
-- **Email:** [Your Email Address]  
-- **LinkedIn:** [Your LinkedIn Profile]  
-- **GitHub:** [Your GitHub Profile]  
-
---- 
-
-Make sure to customize the template to your project's specifics, focusing on **clarity, visual appeal, and impactful results** to leave a lasting impression on reviewers! 🚀
+## Referenes
+[basket](https://www.youtube.com/watch?v=xHWXZyfhQas)<br/>
+[application of neat](https://www.youtube.com/watch?v=WSW-5m8lRMs)
